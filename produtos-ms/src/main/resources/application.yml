@@ -1,0 +1,16 @@
+server:
+  port: 0
+spring:
+  application:
+    name: 'produto'
+  config:
+   import: "optional:configserver:http://localhost:8888"
+  rabbitmq:
+       listener:
+         simple:
+          retry:
+           enabled: true
+           max-attempts: 3
+           initial-interval: 5000
+           multiplier: 1
+           max-interval: 300000
