@@ -2,7 +2,7 @@ package br.com.lanchonete.vendas.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+import java.util.ArrayList;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,9 +33,9 @@ public class VendaService {
 	@Autowired
 	private ProdutoClient produtoClient;
 
-	private List<ProdutoDto> listaDeProdutos;
+	private List<ProdutoDto> listaDeProdutos = new ArrayList<>();
 
-	private List<ClienteDto> listaDeClientes;
+	private List<ClienteDto> listaDeClientes = new ArrayList<>();
 
 	public void cadastrarVenda(VendaDto dto) {
 		Venda venda = modelMapper.map(dto, Venda.class);

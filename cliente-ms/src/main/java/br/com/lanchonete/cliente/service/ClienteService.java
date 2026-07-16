@@ -10,38 +10,49 @@ import org.springframework.stereotype.Service;
 import br.com.lanchonete.cliente.dto.ClienteDto;
 import br.com.lanchonete.cliente.dto.ListaClienteDto;
 import br.com.lanchonete.cliente.model.Cliente;
+import br.com.lanchonete.cliente.rabbitmq.ClienteProducer;
 import br.com.lanchonete.cliente.repository.ClienteRepository;
 
 @Service
-public class ClienteService {
+public class ClienteService implements ClienteServiceImpl{
 
 	@Autowired
 	private ClienteRepository repository;
 
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	 @Autowired
+	    private ClienteProducer producer;
 
+	@Override
 	public ClienteDto cadastrarCliente(ClienteDto dto) {
 		Cliente cliente = modelMapper.map(dto, Cliente.class);
 		repository.save(cliente);
+		//producer.enviarClientes(listarClientes());
 		return modelMapper.map(cliente, ClienteDto.class);
 	}
 
+	@Override
 	public List<ListaClienteDto> listarClientes() {
 		List<Cliente> clientes = repository.findAll();
+	//	producer.enviarClientes(listarClientes());
 		return clientes.stream().map(cliente -> modelMapper.map(cliente, ListaClienteDto.class))
 				.collect(Collectors.toList());
-
 	}
 
+	@Override
 	public void excluirCliente(Long id) {
+		producer.enviarClientes(listarClientes());
 		repository.deleteById(id);
 	}
 
+	@Override
 	public ClienteDto atualizarCliente(ClienteDto dto) {
 		Cliente cliente = modelMapper.map(dto, Cliente.class);
 		cliente.setId(dto.getId());
 		cliente = repository.save(cliente);
+		//producer.enviarClientes(listarClientes());
 		return modelMapper.map(cliente, ClienteDto.class);
 
 	}

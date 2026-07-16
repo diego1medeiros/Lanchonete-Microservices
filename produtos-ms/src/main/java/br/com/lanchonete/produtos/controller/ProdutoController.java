@@ -28,14 +28,14 @@ public class ProdutoController {
 	@Autowired
 	private ProdutoService service;
 	
-	@Autowired
-	private RabbitTemplate rabbitTemplate;
+	//@Autowired
+	//private RabbitTemplate rabbitTemplate;
 
 	@GetMapping
 	public ResponseEntity<List<ListaProdutoDto>> listarProdutos() {
 		List<ListaProdutoDto> listaDeProdutos = service.listarDeProdutos();
-		rabbitTemplate.convertAndSend("produto.lista","", listaDeProdutos);
-		return ResponseEntity.ok(service.listarDeProdutos());
+	//	rabbitTemplate.convertAndSend("produto.lista","", listaDeProdutos);
+		return ResponseEntity.ok(listaDeProdutos);
 	}
 
 	@PostMapping

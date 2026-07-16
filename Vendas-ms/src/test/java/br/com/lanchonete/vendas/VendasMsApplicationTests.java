@@ -1,13 +1,8 @@
 package br.com.lanchonete.vendas;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class VendasMsApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
-
+@SpringBootTest(classes = br.com.lanchonete.vendas.VendasMsApplication.class)
+class TesteApplicationTests {
 }
+

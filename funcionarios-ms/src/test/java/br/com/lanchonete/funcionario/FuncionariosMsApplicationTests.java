@@ -3,11 +3,10 @@ package br.com.lanchonete.funcionario;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class FuncionariosMsApplicationTests {
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
-	@Test
-	void contextLoads() {
-	}
+@SpringBootTest(classes = br.com.lanchonete.funcionario.FuncionariosMsApplication.class)
+class TesteApplicationTests {
 
 }

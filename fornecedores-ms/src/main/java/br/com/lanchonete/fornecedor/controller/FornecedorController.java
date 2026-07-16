@@ -26,13 +26,13 @@ public class FornecedorController {
 	@Autowired
 	private FornecedorService service;
 
-	@Autowired
-	private RabbitTemplate rabbitTemplate;
+//	@Autowired
+//	private RabbitTemplate rabbitTemplate;
 
 	@GetMapping
 	public ResponseEntity<List<ListaFornecedorDto>> listarFornecedores() {
-		List<ListaFornecedorDto> listaDeFornecedores = service.listarFornecedores();
-		rabbitTemplate.convertAndSend("fornecedor.lista", "", listaDeFornecedores);
+		//<ListaFornecedorDto> listaDeFornecedores = service.listarFornecedores();
+		//rabbitTemplate.convertAndSend("fornecedor.lista", "", listaDeFornecedores);
 		return ResponseEntity.ok(service.listarFornecedores());
 	}
 
@@ -55,4 +55,6 @@ public class FornecedorController {
 		FornecedorDto atualizado = service.atualizarFornecedor(dto);
 		return ResponseEntity.ok(atualizado);
 	}
+	
+	
 }

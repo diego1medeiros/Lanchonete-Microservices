@@ -2,6 +2,7 @@ package br.com.lanchonete.vendas.service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,7 +30,7 @@ public class CaixaService {
 	@Autowired
 	private VendaRepository vendaRepository;
 
-	private List<ListaFuncionarioDto> listaDeFuncionarios;
+	private List<ListaFuncionarioDto> listaDeFuncionarios = new ArrayList<>();
 
 	public List<ListaCaixaDto> MovimentacaoDoCaixa() {
 		List<Caixa> caixas = caixaRepository.findAll();

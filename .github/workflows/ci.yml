@@ -1,0 +1,42 @@
+name: Lanchonete Microservices CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        service:
+          - cliente-ms
+          - fornecedores-ms
+          - funcionarios-ms
+          - produtos-ms
+          - vendas-ms
+          - gateway
+          - eureka
+          - config-server
+
+    defaults:
+      run:
+        working-directory: ${{ matrix.service }}
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Compilar e testar
+        run: mvn -B clean verify

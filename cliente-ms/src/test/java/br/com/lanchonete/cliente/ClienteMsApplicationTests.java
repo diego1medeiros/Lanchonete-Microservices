@@ -1,13 +1,7 @@
 package br.com.lanchonete.cliente;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class ClienteMsApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
-
+@SpringBootTest(classes = br.com.lanchonete.cliente.ClienteMsApplication.class)
+class TesteApplicationTests {
 }

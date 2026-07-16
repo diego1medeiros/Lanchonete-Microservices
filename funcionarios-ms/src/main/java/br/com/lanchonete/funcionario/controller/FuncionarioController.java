@@ -20,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.lanchonete.funcionario.dto.FuncionarioDto;
 import br.com.lanchonete.funcionario.dto.ListarFuncionarioDto;
 import br.com.lanchonete.funcionario.service.FuncionarioService;
+import br.com.lanchonete.funcionario.service.FuncionarioServiceImpl;
 
 @RestController
 @RequestMapping("/lanchonete")
@@ -28,13 +29,12 @@ public class FuncionarioController {
 	@Autowired
 	private FuncionarioService service;
 
-	@Autowired
-	private RabbitTemplate rabbitTemplate;
+	//@Autowired
+	//private RabbitTemplate rabbitTemplate;
 
 	@GetMapping
 	public ResponseEntity<List<ListarFuncionarioDto>> listarFuncionarios() {
-		List<ListarFuncionarioDto> funcionarioDto = service.listarFuncionarios();
-		rabbitTemplate.convertAndSend("funcionario.lista", "", funcionarioDto);
+		//rabbitTemplate.convertAndSend("funcionario.lista", "", service.listarFuncionarios());
 		return ResponseEntity.ok(service.listarFuncionarios());
 	}
 
@@ -46,6 +46,7 @@ public class FuncionarioController {
 		return ResponseEntity.created(uri).body(funcionarioDto);
 	}
 
+	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<FuncionarioDto> excluir(@PathVariable Long id) {
 		service.excluirFuncionario(id);

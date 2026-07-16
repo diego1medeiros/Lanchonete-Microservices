@@ -2,6 +2,7 @@ package br.com.lanchonete.funcionario.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.amqp.core.FanoutExchange;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -10,6 +11,7 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 
 @Configuration
 public class Configuracao {
@@ -26,10 +28,10 @@ public class Configuracao {
 		return new RabbitAdmin(connectionFactory);
 	}
 
-	@Bean
-	ApplicationListener<ApplicationEvent> inicializarAdmin(RabbitAdmin rabbitAdmin) {
-		return event -> rabbitAdmin.initialize();
-	}
+	//@Bean
+//ApplicationListener<ApplicationEvent> inicializarAdmin(RabbitAdmin rabbitAdmin) {
+	//	return event -> rabbitAdmin.initialize();
+	//}
 
 	@Bean
 	Jackson2JsonMessageConverter messageConverter() {
@@ -48,5 +50,14 @@ public class Configuracao {
 		return new FanoutExchange("funcionario.lista");
 	}
 
+	@Bean
+	Queue funcionarioRequestQueue() {
+	    return new Queue("funcionario.request", true);
+	}
+
+	@Bean
+	Queue funcionarioDetalhesVendaQueue() {
+	    return new Queue("funcionario.detalhes-venda", true);
+	}
 	// fim da configurações do Rabbitmq//
 }

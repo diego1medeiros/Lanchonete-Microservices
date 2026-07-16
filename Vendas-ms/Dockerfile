@@ -1,4 +1,4 @@
-FROM openjdk:17-alpine
+FROM eclipse-temurin:17-jre-alpine
 RUN addgroup -S spring && adduser -S spring -G spring
 ENV LANG="pt_BR.UTF-8"
 ENV LC_ALL="pt_BR.UTF-8"

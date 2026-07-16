@@ -1,4 +1,4 @@
-FROM openjdk:17-alpine
+FROM eclipse-temurin:17-jre-alpine
 RUN addgroup -S spring && adduser -S spring -G spring
 #COPY src/main/resources/application-prod.properties application.yml
 #ENV SPRING_PROFILES_ACTIVE=prod

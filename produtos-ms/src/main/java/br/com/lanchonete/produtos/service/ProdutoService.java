@@ -1,11 +1,16 @@
 package br.com.lanchonete.produtos.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+
 import br.com.lanchonete.produtos.dto.ListaFornecedorDto;
 import br.com.lanchonete.produtos.dto.ListaProdutoDto;
 import br.com.lanchonete.produtos.dto.ProdutoDto;
@@ -13,7 +18,7 @@ import br.com.lanchonete.produtos.model.Produto;
 import br.com.lanchonete.produtos.repository.ProdutoRepository;
 
 @Service
-public class ProdutoService {
+public class ProdutoService implements ProdutoServiceImpl {
 
 	@Autowired
 	private ProdutoRepository repository;
@@ -21,24 +26,28 @@ public class ProdutoService {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	private List<ListaFornecedorDto> listaDeFornecedores;
+	private List<ListaFornecedorDto> listaDeFornecedores  = new ArrayList<>();
 
+	@Override
 	public ProdutoDto cadastrarProduto(ProdutoDto dto) {
 		Produto produto = modelMapper.map(dto, Produto.class);
 		repository.save(produto);
 		return modelMapper.map(produto, ProdutoDto.class);
 	}
 
+	@Override
 	public List<ListaProdutoDto> listarProdutos() {
 		List<Produto> produtos = repository.findAll();
 		return produtos.stream().map(produto -> modelMapper.map(produto, ListaProdutoDto.class))
 				.collect(Collectors.toList());
 	}
 
+	@Override
 	public void excluirProduto(Long id) {
 		repository.deleteById(id);
 	}
 
+	@Override
 	public ProdutoDto atualizarProduto(ProdutoDto dto) {
 		Produto produto = modelMapper.map(dto, Produto.class);
 		produto.setId(dto.getId());
@@ -47,20 +56,23 @@ public class ProdutoService {
 
 	}
 
+	
+	
+	@Override
 	public List<ListaProdutoDto> listarDeProdutos() {
 		List<ListaProdutoDto> listaProdutos = listarProdutos();
-		List<ListaFornecedorDto> listaFornecedoresListener = listaDeFornecedores;
-
 		for (ListaProdutoDto produtoDto : listaProdutos) {
-			for (ListaFornecedorDto fornecedorDto : listaFornecedoresListener) {
+			for (ListaFornecedorDto fornecedorDto : listaDeFornecedores) {
 				if (produtoDto.getFornecedorId().equals(fornecedorDto.getId())) {
 					produtoDto.getFornecedor().setRazaoSocial(fornecedorDto.getRazaoSocial());
+					   break;
 				}
 			}
 		}
 		return listaProdutos;
 	}
 
+	@Override
 	public void listarDeFornecedores(List<ListaFornecedorDto> listaFornecedorDto) {
 		listaDeFornecedores = listaFornecedorDto;
 	}

@@ -73,15 +73,34 @@ public class Configuracao {
 		return new RabbitAdmin(connectionFactory);
 	}
 
-	@Bean
-	ApplicationListener<ApplicationEvent> inicializarAdmin(RabbitAdmin rabbitAdmin) {
-		return event -> rabbitAdmin.initialize();
-	}
+	//@Bean
+	//ApplicationListener<ApplicationEvent> inicializarAdmin(RabbitAdmin rabbitAdmin) {
+	//	return event -> rabbitAdmin.initialize();
+	//}
 
 	@Bean
 	FanoutExchange fanoutExchangeProduto() {
 		return new FanoutExchange("produto.lista");
+		
 	}
+	
+	@Bean
+	Queue fornecedorQueue(){
+
+	    return new Queue(
+	        "produto.fornecedor.queue",
+	        true
+	    );
+	}
+	@Bean
+	Queue produtoRequestQueue() {
+	    return new Queue("produto.request", true);
+	}
+	
+    @Bean
+    Queue produtoDetalhesVendaQueue() {
+        return new Queue("produto.detalhes-venda", true);
+    }
 
 	// fim da configurão rabbitmq//
 }

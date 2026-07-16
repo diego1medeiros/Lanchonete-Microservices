@@ -20,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.lanchonete.cliente.dto.ClienteDto;
 import br.com.lanchonete.cliente.dto.ListaClienteDto;
 import br.com.lanchonete.cliente.service.ClienteService;
+import br.com.lanchonete.cliente.service.ClienteServiceImpl;
 
 @RestController
 @RequestMapping("/lanchonete")
