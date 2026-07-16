@@ -14,29 +14,27 @@ import br.com.lanchonete.cliente.rabbitmq.ClienteProducer;
 import br.com.lanchonete.cliente.repository.ClienteRepository;
 
 @Service
-public class ClienteService implements ClienteServiceImpl{
+public class ClienteService implements ClienteServiceImpl {
 
 	@Autowired
 	private ClienteRepository repository;
 
 	@Autowired
 	private ModelMapper modelMapper;
-	
-	 @Autowired
-	    private ClienteProducer producer;
+
+	@Autowired
+	private ClienteProducer producer;
 
 	@Override
 	public ClienteDto cadastrarCliente(ClienteDto dto) {
 		Cliente cliente = modelMapper.map(dto, Cliente.class);
 		repository.save(cliente);
-		//producer.enviarClientes(listarClientes());
 		return modelMapper.map(cliente, ClienteDto.class);
 	}
 
 	@Override
 	public List<ListaClienteDto> listarClientes() {
 		List<Cliente> clientes = repository.findAll();
-	//	producer.enviarClientes(listarClientes());
 		return clientes.stream().map(cliente -> modelMapper.map(cliente, ListaClienteDto.class))
 				.collect(Collectors.toList());
 	}
@@ -52,7 +50,6 @@ public class ClienteService implements ClienteServiceImpl{
 		Cliente cliente = modelMapper.map(dto, Cliente.class);
 		cliente.setId(dto.getId());
 		cliente = repository.save(cliente);
-		//producer.enviarClientes(listarClientes());
 		return modelMapper.map(cliente, ClienteDto.class);
 
 	}

@@ -26,13 +26,8 @@ public class FornecedorController {
 	@Autowired
 	private FornecedorService service;
 
-//	@Autowired
-//	private RabbitTemplate rabbitTemplate;
-
 	@GetMapping
 	public ResponseEntity<List<ListaFornecedorDto>> listarFornecedores() {
-		//<ListaFornecedorDto> listaDeFornecedores = service.listarFornecedores();
-		//rabbitTemplate.convertAndSend("fornecedor.lista", "", listaDeFornecedores);
 		return ResponseEntity.ok(service.listarFornecedores());
 	}
 

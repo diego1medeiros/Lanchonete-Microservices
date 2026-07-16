@@ -19,7 +19,7 @@ import br.com.lanchonete.vendas.repository.ItemVendaRepository;
 import br.com.lanchonete.vendas.repository.VendaRepository;
 
 @Service
-public class VendaService {
+public class VendaService implements VendaServiceImpl{
 
 	@Autowired
 	private ModelMapper modelMapper;
@@ -37,6 +37,7 @@ public class VendaService {
 
 	private List<ClienteDto> listaDeClientes = new ArrayList<>();
 
+	@Override
 	public void cadastrarVenda(VendaDto dto) {
 		Venda venda = modelMapper.map(dto, Venda.class);
 		vendaRepository.save(venda);
@@ -57,11 +58,13 @@ public class VendaService {
 		}
 	}
 
+	@Override
 	public List<ListaVendaDto> listarVendas() {
 		List<Venda> vendas = vendaRepository.findAll();
 		return vendas.stream().map(venda -> modelMapper.map(venda, ListaVendaDto.class)).collect(Collectors.toList());
 	}
 
+	@Override
 	public List<ListaVendaDto> listaDeVendas() {
 		List<ListaVendaDto> listaVendas = listarVendas();
 		List<ClienteDto> listarClientes = listaDeClientes;
@@ -76,7 +79,7 @@ public class VendaService {
 		}
 		return listaVendas;
 	}
-
+	@Override
 	public void removerVenda(Long id) {
 		vendaRepository.deleteById(id);
 		Venda venda = vendaRepository.getReferenceById(id);
@@ -87,18 +90,21 @@ public class VendaService {
 		}
 	}
 
+	@Override
 	public List<ListaItemVendaDto> listaDeItens(Long id) {
 		List<ItemVenda> itemVendas = itemVendaRepository.findByVendaId(id);
 		return itemVendas.stream().map(itemVenda -> modelMapper.map(itemVenda, ListaItemVendaDto.class))
 				.collect(Collectors.toList());
 	}
 
+	@Override
 	public List<ListaItemVendaDto> listaDeItemVenda() {
 		List<ItemVenda> itemVendas = itemVendaRepository.findAll();
 		return itemVendas.stream().map(itemVenda -> modelMapper.map(itemVenda, ListaItemVendaDto.class))
 				.collect(Collectors.toList());
 	}
 
+	@Override
 	public List<ListaItemVendaDto> listarItens(long id) {
 		List<ListaItemVendaDto> listaDeItens = listaDeItens(id);
 		List<ListaVendaDto> listaVendas = listaDeVendas();
@@ -117,10 +123,12 @@ public class VendaService {
 		return listaDeItens;
 	}
 
+	@Override
 	public void listarDeProdutos(List<ProdutoDto> listaProdutoDto) {
 		listaDeProdutos = listaProdutoDto;
 	}
 
+	@Override
 	public void listarDeClientes(List<ClienteDto> listaClienteDto) {
 		listaDeClientes = listaClienteDto;
 	}

@@ -29,7 +29,6 @@ public class FuncionarioService implements FuncionarioServiceImpl{
 		return modelMapper.map(funcionario, FuncionarioDto.class);
 	}
 
-	
 	@Override
 	public List<ListarFuncionarioDto> listarFuncionarios() {
 		List<Funcionario> funcionarios = repository.findAll();

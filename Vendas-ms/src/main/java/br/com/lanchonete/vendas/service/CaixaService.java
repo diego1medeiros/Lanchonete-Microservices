@@ -19,7 +19,7 @@ import br.com.lanchonete.vendas.repository.CaixaRepository;
 import br.com.lanchonete.vendas.repository.VendaRepository;
 
 @Service
-public class CaixaService {
+public class CaixaService implements CaixaServiceImpl {
 
 	@Autowired
 	private CaixaRepository caixaRepository;
@@ -32,27 +32,32 @@ public class CaixaService {
 
 	private List<ListaFuncionarioDto> listaDeFuncionarios = new ArrayList<>();
 
+	@Override
 	public List<ListaCaixaDto> MovimentacaoDoCaixa() {
 		List<Caixa> caixas = caixaRepository.findAll();
 		return caixas.stream().map(caixa -> modelMapper.map(caixa, ListaCaixaDto.class)).collect(Collectors.toList());
 	}
 
+	@Override
 	public void excluirPorId(Long id) {
 		caixaRepository.deleteById(id);
 	}
 
+	@Override
 	public CaixaDto CadastrarMovimentacaoCaixa(CaixaDto caixaDto) {
 		Caixa caixa = modelMapper.map(caixaDto, Caixa.class);
 		caixaRepository.save(caixa);
 		return modelMapper.map(caixa, CaixaDto.class);
 	}
 
+	@Override
 	public Double buscaValorTotalDoCaixaPeloData(LocalDateTime localDateTime) {
 		Date date = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
 		Double valorTotal = vendaRepository.sumValorTotalByData(date);
 		return valorTotal;
 	}
 
+	@Override
 	public List<ListaCaixaDto> ListaDaMovimentacaoDoCaixa() {
 		List<ListaCaixaDto> listaMovimentacaoDoCaixa = MovimentacaoDoCaixa();
 		List<ListaFuncionarioDto> ListaDeFuncionarios = listaDeFuncionarios;
@@ -66,6 +71,7 @@ public class CaixaService {
 		return listaMovimentacaoDoCaixa;
 	}
 
+	@Override
 	public void listarDeFuncionarios(List<ListaFuncionarioDto> listaFuncionarioDto) {
 		listaDeFuncionarios = listaFuncionarioDto;
 	}

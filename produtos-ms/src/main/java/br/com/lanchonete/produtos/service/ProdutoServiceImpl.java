@@ -9,10 +9,8 @@ public interface ProdutoServiceImpl {
 	
 	public ProdutoDto cadastrarProduto(ProdutoDto dto) ;
 	
-
 	public List<ListaProdutoDto> listarProdutos();
 		
-
 	public void excluirProduto(Long id);
 	
 	public ProdutoDto atualizarProduto(ProdutoDto dto) ;

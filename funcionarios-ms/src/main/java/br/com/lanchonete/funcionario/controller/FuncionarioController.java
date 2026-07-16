@@ -3,7 +3,6 @@ package br.com.lanchonete.funcionario.controller;
 import java.net.URI;
 import java.util.List;
 
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.lanchonete.funcionario.dto.FuncionarioDto;
 import br.com.lanchonete.funcionario.dto.ListarFuncionarioDto;
 import br.com.lanchonete.funcionario.service.FuncionarioService;
-import br.com.lanchonete.funcionario.service.FuncionarioServiceImpl;
 
 @RestController
 @RequestMapping("/lanchonete")
@@ -29,12 +27,8 @@ public class FuncionarioController {
 	@Autowired
 	private FuncionarioService service;
 
-	//@Autowired
-	//private RabbitTemplate rabbitTemplate;
-
 	@GetMapping
 	public ResponseEntity<List<ListarFuncionarioDto>> listarFuncionarios() {
-		//rabbitTemplate.convertAndSend("funcionario.lista", "", service.listarFuncionarios());
 		return ResponseEntity.ok(service.listarFuncionarios());
 	}
 
