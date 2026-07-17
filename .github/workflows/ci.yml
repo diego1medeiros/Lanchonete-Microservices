@@ -23,7 +23,6 @@ jobs:
           - eureka
           - config-server
         
-
     defaults:
       run:
         working-directory: ${{ matrix.service }}
