@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.lanchonete.cliente.dto.ClienteDto;
 import br.com.lanchonete.cliente.dto.ListaClienteDto;
@@ -26,6 +27,7 @@ public class ClienteService implements ClienteServiceImpl {
 	private ClienteProducer producer;
 
 	@Override
+	@Transactional
 	public ClienteDto cadastrarCliente(ClienteDto dto) {
 		Cliente cliente = modelMapper.map(dto, Cliente.class);
 		repository.save(cliente);
