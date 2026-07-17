@@ -34,7 +34,7 @@ jobs:
           - service: produtos-ms
             image: produto
 
-          - service: vendas-ms
+          - service: Vendas-ms
             image: venda
 
     steps:
