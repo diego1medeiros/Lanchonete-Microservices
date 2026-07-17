@@ -22,6 +22,7 @@ jobs:
           - gateway
           - eureka
           - config-server
+          - lanchonete-web
 
     defaults:
       run:
