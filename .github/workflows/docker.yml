@@ -10,6 +10,33 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        include:
+          - service: config-server
+            image: config-server
+
+          - service: eureka
+            image: eureka
+
+          - service: gateway
+            image: gateway-m
+
+          - service: cliente-ms
+            image: cliente
+
+          - service: funcionarios-ms
+            image: funcionario
+
+          - service: fornecedores-ms
+            image: fornecedor
+
+          - service: produtos-ms
+            image: produto
+
+          - service: vendas-ms
+            image: venda
+
     steps:
 
       - name: Checkout
@@ -24,66 +51,10 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Config Server
-      - name: Build Config Server
+      - name: Build and Push ${{ matrix.service }}
         uses: docker/build-push-action@v6
         with:
-          context: ./config-server
+          context: ./${{ matrix.service }}
+          file: ./${{ matrix.service }}/Dockerfile
           push: true
-          tags: diego1medeiros/config-server:latest
-
-      # Eureka
-      - name: Build Eureka
-        uses: docker/build-push-action@v6
-        with:
-          context: ./eureka
-          push: true
-          tags: diego1medeiros/eureka:latest
-
-      # Gateway
-      - name: Build Gateway
-        uses: docker/build-push-action@v6
-        with:
-          context: ./gateway
-          push: true
-          tags: diego1medeiros/gateway-m:latest
-
-      # Cliente
-      - name: Build Cliente
-        uses: docker/build-push-action@v6
-        with:
-          context: ./cliente-ms
-          push: true
-          tags: diego1medeiros/cliente:latest
-
-      # Funcionários
-      - name: Build Funcionarios
-        uses: docker/build-push-action@v6
-        with:
-          context: ./funcionarios-ms
-          push: true
-          tags: diego1medeiros/funcionario:latest
-
-      # Fornecedores
-      - name: Build Fornecedores
-        uses: docker/build-push-action@v6
-        with:
-          context: ./fornecedores-ms
-          push: true
-          tags: diego1medeiros/fornecedor:latest
-
-      # Produtos
-      - name: Build Produtos
-        uses: docker/build-push-action@v6
-        with:
-          context: ./produtos-ms
-          push: true
-          tags: diego1medeiros/produto:latest
-
-      # Vendas
-      - name: Build Vendas
-        uses: docker/build-push-action@v6
-        with:
-          context: ./vendas-ms
-          push: true
-          tags: diego1medeiros/venda:latest
+          tags: diego1medeiros/${{ matrix.image }}:latest
