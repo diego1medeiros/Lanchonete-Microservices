@@ -18,7 +18,7 @@ jobs:
           - fornecedores-ms
           - funcionarios-ms
           - produtos-ms
-          - vendas-ms
+          - Vendas-ms
           - gateway
           - eureka
           - config-server
